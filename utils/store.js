@@ -94,13 +94,16 @@ function computeStats() {
   doneDates.forEach((d) => { doneSet[d] = true; });
 
   const today = dateUtil.todayString();
+  const todayRecord = records.find((r) => r.date === today);
   let currentStreak = 0;
-  let cursor = doneSet[today] ? today : dateUtil.yesterdayString();
-  while (doneSet[cursor]) {
-    currentStreak += 1;
-    const d = dateUtil.parseDate(cursor);
-    d.setDate(d.getDate() - 1);
-    cursor = dateUtil.formatDate(d);
+  if (!(todayRecord && todayRecord.angry)) {
+    let cursor = doneSet[today] ? today : dateUtil.yesterdayString();
+    while (doneSet[cursor]) {
+      currentStreak += 1;
+      const d = dateUtil.parseDate(cursor);
+      d.setDate(d.getDate() - 1);
+      cursor = dateUtil.formatDate(d);
+    }
   }
 
   let bestStreak = 0;
