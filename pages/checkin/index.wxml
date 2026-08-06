@@ -1,0 +1,28 @@
+<view class="page">
+  <view class="header">
+    <view class="date">{{today}}</view>
+    <view class="motto">深呼吸，今天也不要生气</view>
+  </view>
+
+  <view wx:if="{{status === 'idle'}}" class="card">
+    <view class="card-title">开启今日挑战</view>
+    <view class="card-desc">从今天开始，承诺一整天都不生气</view>
+    <button class="primary-btn" bindtap="onStartToday">开启今日挑战</button>
+  </view>
+
+  <view wx:elif="{{status === 'pending'}}" class="card">
+    <view class="card-title">已承诺</view>
+    <view class="card-desc">期待今晚的好消息，坚持住</view>
+    <button class="primary-btn" bindtap="onConfirmToday">今晚确认：今天没生气</button>
+  </view>
+
+  <view wx:else class="card done">
+    <view class="card-title">今日挑战成功</view>
+    <view class="card-desc">你做到了，太棒了！</view>
+  </view>
+
+  <view class="streak">
+    <view class="streak-num">{{currentStreak}}</view>
+    <view class="streak-label">当前连续不生气天数</view>
+  </view>
+</view>

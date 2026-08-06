@@ -1,0 +1,28 @@
+<view class="page">
+  <view class="stats-row">
+    <view class="stat-card">
+      <view class="stat-num">{{currentStreak}}</view>
+      <view class="stat-label">连续天数</view>
+    </view>
+    <view class="stat-card">
+      <view class="stat-num">{{totalDays}}</view>
+      <view class="stat-label">累计天数</view>
+    </view>
+    <view class="stat-card">
+      <view class="stat-num">{{bestStreak}}</view>
+      <view class="stat-label">最多连续</view>
+    </view>
+  </view>
+
+  <view class="section-title">成就徽章</view>
+  <view class="badge-grid">
+    <view
+      wx:for="{{milestones}}"
+      wx:key="days"
+      class="badge {{item.unlocked ? 'unlocked' : 'locked'}}"
+    >
+      <view class="badge-days">{{item.days}}</view>
+      <view class="badge-unit">天</view>
+    </view>
+  </view>
+</view>
