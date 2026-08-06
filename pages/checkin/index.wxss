@@ -2,6 +2,7 @@
 .header { text-align: center; margin-bottom: 48rpx; }
 .date { font-size: 40rpx; font-weight: 600; color: #ff8a5c; }
 .motto { font-size: 26rpx; color: #9aa0a6; margin-top: 12rpx; }
+.quote { text-align: center; font-size: 26rpx; color: #9aa0a6; font-style: italic; margin-bottom: 32rpx; line-height: 1.6; }
 .card {
   background: #fff; border-radius: 24rpx; padding: 56rpx 40rpx;
   box-shadow: 0 4rpx 16rpx rgba(0,0,0,0.05); text-align: center;
@@ -9,9 +10,30 @@
 .card-title { font-size: 36rpx; font-weight: 600; margin-bottom: 16rpx; }
 .card-desc { font-size: 26rpx; color: #9aa0a6; margin-bottom: 40rpx; }
 .card.done .card-title { color: #52c41a; }
+.card.angry .card-title { color: #e6a23c; }
 .primary-btn {
   background: #ff8a5c; color: #fff; border-radius: 999rpx; font-size: 32rpx;
+}
+.ghost-btn {
+  background: #fff; color: #ff8a5c; border: 2rpx solid #ff8a5c;
+  border-radius: 999rpx; font-size: 30rpx; margin-top: 20rpx;
 }
 .streak { text-align: center; margin-top: 72rpx; }
 .streak-num { font-size: 120rpx; font-weight: 700; color: #ff8a5c; }
 .streak-label { font-size: 26rpx; color: #9aa0a6; margin-top: 8rpx; }
+.modal-mask {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.4);
+  display: flex; align-items: center; justify-content: center; z-index: 100;
+}
+.modal { width: 80%; background: #fff; border-radius: 24rpx; padding: 40rpx 32rpx; }
+.modal-title { font-size: 32rpx; font-weight: 600; margin-bottom: 24rpx; }
+.tag-wrap { display: flex; flex-wrap: wrap; margin-bottom: 24rpx; }
+.tag {
+  padding: 12rpx 28rpx; border-radius: 999rpx; border: 2rpx solid #e0e0e0;
+  color: #666; margin: 0 16rpx 16rpx 0; font-size: 28rpx;
+}
+.tag.selected { background: #ff8a5c; border-color: #ff8a5c; color: #fff; }
+.custom-input {
+  border: 2rpx solid #e0e0e0; border-radius: 12rpx; padding: 16rpx 20rpx;
+  font-size: 28rpx; margin-bottom: 32rpx;
+}

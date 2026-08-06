@@ -4,6 +4,8 @@
     <view class="motto">深呼吸，今天也不要生气</view>
   </view>
 
+  <view class="quote" wx:if="{{status === 'idle' || status === 'pending'}}">「{{dailyQuote}}」</view>
+
   <view wx:if="{{status === 'idle'}}" class="card">
     <view class="card-title">开启今日挑战</view>
     <view class="card-desc">从今天开始，承诺一整天都不生气</view>
@@ -14,15 +16,39 @@
     <view class="card-title">已承诺</view>
     <view class="card-desc">期待今晚的好消息，坚持住</view>
     <button class="primary-btn" bindtap="onConfirmToday">今晚确认：今天没生气</button>
+    <button class="ghost-btn" bindtap="openAngryModal">今天忍不住生气了</button>
+  </view>
+
+  <view wx:elif="{{status === 'angry'}}" class="card angry">
+    <view class="card-title">今天放松一点</view>
+    <view class="card-desc">记录下原因，明天重新开始</view>
+    <button class="ghost-btn" bindtap="openAngryModal">补充生气原因</button>
   </view>
 
   <view wx:else class="card done">
     <view class="card-title">今日挑战成功</view>
-    <view class="card-desc">你做到了，太棒了！</view>
+    <view class="card-desc">{{doneMessage}}</view>
   </view>
 
   <view class="streak">
     <view class="streak-num">{{currentStreak}}</view>
     <view class="streak-label">当前连续不生气天数</view>
+  </view>
+
+  <view class="modal-mask" wx:if="{{showAngryModal}}" bindtap="closeAngryModal">
+    <view class="modal" catchtap="noop">
+      <view class="modal-title">这次是因为什么？</view>
+      <view class="tag-wrap">
+        <view
+          wx:for="{{reasonTags}}"
+          wx:key="*this"
+          class="tag {{selectedReasons.indexOf(item) >= 0 ? 'selected' : ''}}"
+          data-tag="{{item}}"
+          bindtap="onToggleReason"
+        >{{item}}</view>
+      </view>
+      <input class="custom-input" placeholder="补充说明（可选）" value="{{customReason}}" bindinput="onCustomInput" />
+      <button class="primary-btn" bindtap="onConfirmAngry">记下了</button>
+    </view>
   </view>
 </view>
