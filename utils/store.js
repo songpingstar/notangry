@@ -8,7 +8,13 @@ function getRecords() {
     const data = wx.getStorageSync(RECORDS_KEY);
     if (Array.isArray(data)) {
       return data
-        .map((r) => ({ date: String(r.date), started: !!r.started, done: !!r.done }))
+        .map((r) => ({
+          date: String(r.date),
+          started: !!r.started,
+          done: !!r.done,
+          angry: !!r.angry,
+          reason: Array.isArray(r.reason) ? r.reason.map(String) : []
+        }))
         .sort((a, b) => (a.date < b.date ? -1 : 1));
     }
   } catch (e) { /* ignore */ }
@@ -36,7 +42,8 @@ function getTodayStatus() {
   const record = getRecords().find((r) => r.date === today);
   return {
     started: !!(record && record.started),
-    done: !!(record && record.done)
+    done: !!(record && record.done),
+    angry: !!(record && record.angry)
   };
 }
 
@@ -46,6 +53,38 @@ function startToday() {
 
 function confirmToday() {
   upsert({ date: dateUtil.todayString(), started: true, done: true });
+}
+
+function recordAngry(reasons) {
+  const today = dateUtil.todayString();
+  const records = getRecords();
+  const idx = records.findIndex((r) => r.date === today);
+  const record = {
+    date: today,
+    started: true,
+    done: false,
+    angry: true,
+    reason: Array.isArray(reasons) ? reasons : []
+  };
+  if (idx >= 0) {
+    records[idx] = Object.assign({}, records[idx], record);
+  } else {
+    records.push(record);
+  }
+  saveRecords(records);
+}
+
+function getReasonFrequency() {
+  const freq = {};
+  getRecords().forEach((r) => {
+    (r.reason || []).forEach((text) => {
+      const key = String(text).trim();
+      if (key) freq[key] = (freq[key] || 0) + 1;
+    });
+  });
+  return Object.keys(freq)
+    .map((text) => ({ text, count: freq[text] }))
+    .sort((a, b) => b.count - a.count);
 }
 
 function computeStats() {
@@ -88,10 +127,25 @@ function getDayMap() {
   return map;
 }
 
+function migrateUnlocked() {
+  try {
+    const data = wx.getStorageSync(UNLOCKED_KEY);
+    if (!Array.isArray(data)) {
+      wx.setStorageSync(UNLOCKED_KEY, []);
+      return;
+    }
+    const hasNumeric = data.some((d) => typeof d === 'number');
+    if (hasNumeric) {
+      const migrated = data.map((d) => 'streak_' + d);
+      wx.setStorageSync(UNLOCKED_KEY, migrated);
+    }
+  } catch (e) { /* ignore */ }
+}
+
 function getUnlockedAchievements() {
   try {
     const data = wx.getStorageSync(UNLOCKED_KEY);
-    if (Array.isArray(data)) return data.map(Number).filter((n) => n > 0);
+    if (Array.isArray(data)) return data.map(String).filter((s) => s);
   } catch (e) { /* ignore */ }
   return [];
 }
@@ -105,8 +159,11 @@ module.exports = {
   getTodayStatus,
   startToday,
   confirmToday,
+  recordAngry,
+  getReasonFrequency,
   computeStats,
   getDayMap,
+  migrateUnlocked,
   getUnlockedAchievements,
   saveUnlockedAchievements
 };
