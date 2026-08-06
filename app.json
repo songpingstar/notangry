@@ -1,0 +1,23 @@
+{
+  "pages": [
+    "pages/checkin/index",
+    "pages/stats/index"
+  ],
+  "window": {
+    "navigationBarTitleText": "不生气打卡",
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#f7f8fa"
+  },
+  "tabBar": {
+    "color": "#9aa0a6",
+    "selectedColor": "#ff8a5c",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "list": [
+      { "pagePath": "pages/checkin/index", "text": "今日打卡" },
+      { "pagePath": "pages/stats/index", "text": "统计与成就" }
+    ]
+  },
+  "sitemapLocation": "sitemap.json"
+}

@@ -1,0 +1,13 @@
+{
+  "compileType": "miniprogram",
+  "libVersion": "2.33.0",
+  "appid": "touristappid",
+  "projectname": "not-angry-checkin",
+  "setting": {
+    "es6": true,
+    "minified": true,
+    "urlCheck": false,
+    "postcss": true,
+    "ignoreUploadUnusedFiles": true
+  }
+}
