@@ -42,7 +42,7 @@
         <view
           wx:for="{{reasonTags}}"
           wx:key="*this"
-          class="tag {{selectedReasons.indexOf(item) >= 0 ? 'selected' : ''}}"
+          class="tag {{selectedMap[item] ? 'selected' : ''}}"
           data-tag="{{item}}"
           bindtap="onToggleReason"
         >{{item}}</view>

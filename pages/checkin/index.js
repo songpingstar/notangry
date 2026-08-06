@@ -15,8 +15,15 @@ Page({
     doneMessage: '',
     reasonTags: REASON_TAGS,
     selectedReasons: [],
+    selectedMap: {},
     customReason: '',
     showAngryModal: false
+  },
+
+  syncSelectedMap(reasons) {
+    const map = {};
+    reasons.forEach((r) => { map[r] = true; });
+    return map;
   },
 
   onShow() {
@@ -54,7 +61,7 @@ Page({
   },
 
   openAngryModal() {
-    this.setData({ showAngryModal: true, selectedReasons: [], customReason: '' });
+    this.setData({ showAngryModal: true, selectedReasons: [], selectedMap: {}, customReason: '' });
   },
 
   closeAngryModal() {
@@ -71,7 +78,10 @@ Page({
     } else {
       selected = selected.concat(tag);
     }
-    this.setData({ selectedReasons: selected });
+    this.setData({
+      selectedReasons: selected,
+      selectedMap: this.syncSelectedMap(selected)
+    });
   },
 
   onCustomInput(e) {
