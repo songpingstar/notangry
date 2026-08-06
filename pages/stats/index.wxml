@@ -14,15 +14,51 @@
     </view>
   </view>
 
+  <view class="section-title">打卡日历</view>
+  <view class="cal-header">
+    <view class="cal-nav" bindtap="onPrevMonth">‹</view>
+    <view class="cal-label">{{monthLabel}}</view>
+    <view class="cal-nav" bindtap="onNextMonth">›</view>
+  </view>
+  <view class="cal-week">
+    <view class="cal-week-cell" wx:for="{{WEEK_CN}}" wx:key="*this">{{item}}</view>
+  </view>
+  <view class="cal-grid">
+    <view
+      wx:for="{{calendar}}"
+      wx:key="index"
+      class="cal-cell {{item.type}}"
+    >{{item.day}}</view>
+  </view>
+  <view class="cal-legend">
+    <view class="legend-item"><view class="dot done"></view>成功</view>
+    <view class="legend-item"><view class="dot angry"></view>生气</view>
+    <view class="legend-item"><view class="dot started"></view>已承诺</view>
+  </view>
+
+  <view class="section-title">近 30 天趋势</view>
+  <canvas canvas-id="trendChart" class="trend-canvas"></canvas>
+
+  <view class="section-title">生气原因排行</view>
+  <view class="freq-list">
+    <view wx:if="{{frequencies.length === 0}}" class="freq-empty">暂无记录</view>
+    <view wx:for="{{frequencies}}" wx:key="text" class="freq-item">
+      <view class="freq-text">{{item.text}}</view>
+      <view class="freq-bar-wrap"><view class="freq-bar" style="width: {{item.count / 10 * 100}}%;"></view></view>
+      <view class="freq-count">{{item.count}}</view>
+    </view>
+  </view>
+
   <view class="section-title">成就徽章</view>
   <view class="badge-grid">
     <view
-      wx:for="{{milestones}}"
-      wx:key="days"
+      wx:for="{{achievements}}"
+      wx:key="id"
       class="badge {{item.unlocked ? 'unlocked' : 'locked'}}"
     >
-      <view class="badge-days">{{item.days}}</view>
-      <view class="badge-unit">天</view>
+      <view class="badge-days">{{item.days > 0 ? item.days : '✓'}}</view>
+      <view class="badge-title">{{item.title}}</view>
+      <view class="badge-desc">{{item.desc}}</view>
     </view>
   </view>
 </view>
