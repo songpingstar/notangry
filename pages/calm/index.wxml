@@ -1,0 +1,18 @@
+<view class="calm-page">
+  <view class="calm-title">慢慢来</view>
+
+  <view class="circle-wrap">
+    <view class="circle {{phaseLabel}}" style="transform: scale({{scale}});"></view>
+    <view class="phase-label">{{phaseLabel}}</view>
+    <view class="round-info" wx:if="{{!finished}}">第 {{rounds + 1}} / 3 轮</view>
+  </view>
+
+  <view class="message" wx:if="{{finished}}">{{message}}</view>
+
+  <view class="tips" wx:if="{{!finished}}">
+    <view>跟着圆圈节奏呼吸</view>
+    <view>吸气 4 秒 · 屏息 4 秒 · 呼气 6 秒</view>
+  </view>
+
+  <button class="back-btn" bindtap="onGoBack">返回打卡页</button>
+</view>

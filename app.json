@@ -1,7 +1,8 @@
 {
   "pages": [
     "pages/checkin/index",
-    "pages/stats/index"
+    "pages/stats/index",
+    "pages/calm/index"
   ],
   "window": {
     "navigationBarTitleText": "不生气打卡",
